@@ -1,0 +1,1 @@
+This directory will be the home for the singularity container(s) required to run this pipeline

@@ -1,0 +1,13 @@
+.nextflow.log*
+.nextflow/
+work/
+.vscode/
+report.html*
+data/
+.*.swp
+.*.swo
+*.pyc
+*.pyo
+*.html
+*.zip
+singularity/*

@@ -1,0 +1,1 @@
+Directory to use to store data that you do not want tracked by git
