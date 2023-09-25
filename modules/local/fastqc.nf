@@ -17,6 +17,6 @@ process FASTQC {
 
     script:
         """
-        fastqc --extract -q $fastq --adapters $projectDir/scripts/adapter_list.tsv --dir /data2/Jack/temp
+        fastqc --extract -q $fastq --adapters ${projectDir}/scripts/adapter_list.tsv --dir /data2/Jack/temp
         """
 }

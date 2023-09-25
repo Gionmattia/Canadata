@@ -22,8 +22,8 @@ process SALMON_QUANT {
             -i $index \
             -p 10 \
             -l A \
-            -1 $input_dir/"$sample""_1_less_rRNA""$extension" \
-            -2 $input_dir/"$sample""_2_less_rRNA""$extension" \
+            -1 ${input_dir}/"$sample""_1_less_rRNA""$extension" \
+            -2 ${input_dir}/"$sample""_2_less_rRNA""$extension" \
             -o "$sample""quant"        
     """
 }

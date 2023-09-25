@@ -1,2 +1,6 @@
 input_dir : "sample_data/"
-output_dir : "./data"   
+output_dir : "./data"
+
+// This directory should host the intermediate files which are not the final output. Or should I put all of them into output?
+study_dir : "somewhere"
+
