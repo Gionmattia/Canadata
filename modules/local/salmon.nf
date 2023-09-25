@@ -3,7 +3,6 @@
 process SALMON_QUANT {
 
     tag 'medium'
-
 	publishDir "${params.output_dir}/salmon_quant", mode: 'copy'
 
     // errorStrategy  { task.attempt <= maxRetries  ? 'retry' :  'ignore' }
@@ -18,7 +17,7 @@ process SALMON_QUANT {
 
     // Need to check the -1 and -2 option actually refers the naming convetions applied so far. It could be different from
     // what expected
-    
+
     script:
         """
         salmon quant \
