@@ -14,6 +14,6 @@ process rRNA_REMOVAL {
 
     script:
     """
-    bowtie -p ${task.cpus} -v 3 ${params.rRNA_index} -q ${trimmed_fastq} --un ${sample_id}_less_rRNA.fastq.gz >> screen_output.txt 2>&1
+    bowtie -p ${task.cpus} -v 3 ${params.rRNA_index} -q ${trimmed_fastq} --un ${trimmed_fastq.baseName}_less_rRNA.fastq.gz >> screen_output.txt 2>&1
     """
 }
