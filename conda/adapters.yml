@@ -1,0 +1,6 @@
+name: adapters
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - pandas

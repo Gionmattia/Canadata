@@ -4,7 +4,7 @@
 nextflow.enable.dsl=2
 
 /// Import modules and subworkflows
-include { quality_control } from './subworkflows/local/quality_control.nf'
+include { preprocessing } from './subworkflows/local/preprocessing.nf'
 
 // Log the parameters
 log.info """\
@@ -38,12 +38,18 @@ def help() {
 
 /// Define the main workflow
 workflow {
-    /// Define the input channels
-    fastq_ch = Channel.fromPath("${params.input_dir}/*.fastq.gz")
+    // println "$params.samplesheet"
+    // fastq_ch = Channel.fromPath("${params.samplesheet}").splitCsv(header: true)
+    // fastq_ch.view()
+    // /// Define the input channels
+    // fastq_ch = Channel.fromPath("${params.input_dir}/*.fastq.gz")
+    //                     .ifEmpty { exit 1, "No fastq files found in ${params.input_dir}" }
+
+    fastq_ch = Channel.fromFilePairs("${params.input_dir}/*{1,2}.fastq.gz", size: 2)
                         .ifEmpty { exit 1, "No fastq files found in ${params.input_dir}" }
 
     /// Run the subworkflow
-    quality_control(fastq_ch)
+    preprocessing(fastq_ch)
 }
 
 workflow.onComplete {

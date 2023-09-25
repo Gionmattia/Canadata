@@ -1,21 +1,22 @@
 
-// Example module that runs fastqc on a single fastq file.
-// Results are publushed to the study directory in the fastqc directory
 
 process FASTQC {
 
     tag 'medium'
 
-	publishDir "${params.output_dir}/fastqc", mode: 'copy'
+	publishDir "${params.study_dir}/fastqc", mode: 'copy'
+
+    // errorStrategy  { task.attempt <= maxRetries  ? 'retry' :  'ignore' }
 	
 	input:
-	    file fastq 
+        tuple val(sample_id), file(fastq)
 
 	output:
-	    path "*_fastqc.{zip,html}", emit: fastqc_full_reports
+	    path "*_fastqc.html", emit: fastqc_html
+        path "${fastq.baseName}_fastqc/fastqc_data.txt", emit: fastqc_data
 
     script:
         """
-        fastqc -q $fastq 
+        fastqc --extract -q $fastq --adapters $projectDir/scripts/adapter_list.tsv --dir /data2/Jack/temp
         """
 }
