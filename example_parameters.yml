@@ -1,6 +1,8 @@
 input_dir : "sample_data/"
-output_dir : "./data"
+output_dir : "./data/output"
 
 // This directory should host the intermediate files which are not the final output. Or should I put all of them into output?
 study_dir : "somewhere"
 
+// This is the directory containing the bowtie indexes. Provisional, not sure if it will work. ChatGPT says yes though.
+rRNA_index : "./data/bowtie_indexes/mmus_rRNAs"

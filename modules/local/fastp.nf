@@ -1,6 +1,6 @@
 process FASTP {
-    publishDir "${params.study_dir}/fastp", mode: 'copy', pattern: '*.json'
-    publishDir "${params.study_dir}/fastp", mode: 'copy', pattern: '*.html'
+    publishDir "${params.output_dir}/fastp", mode: 'copy', pattern: '*.json'
+    publishDir "${params.output_dir}/fastp", mode: 'copy', pattern: '*.html'
 
     // errorStrategy 'ignore'
     

@@ -1,10 +1,10 @@
 process FIND_ADAPTERS {
-	publishDir "${params.study_dir}/adapter_reports", mode: 'copy'
+	publishDir "${params.output_dir}/adapter_reports", mode: 'copy'
     
     // errorStrategy  { task.attempt <= maxRetries  ? 'retry' :  'ignore' }
 
     input:
-        tuple val(sample_id), file(raw_fastq)
+        tuple val(sample_id), file(raw_fastq) //sample_id is automatically generated from the channel.frompairs.
         file fastqc_data
 
     output:

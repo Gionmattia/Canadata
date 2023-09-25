@@ -4,7 +4,7 @@ process FASTQC {
 
     tag 'medium'
 
-	publishDir "${params.study_dir}/fastqc", mode: 'copy'
+	publishDir "${params.output_dir}/fastqc", mode: 'copy'
 
     // errorStrategy  { task.attempt <= maxRetries  ? 'retry' :  'ignore' }
 	
