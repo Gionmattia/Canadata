@@ -14,9 +14,10 @@ workflow preprocessing {
         fastqc_ch           =   FASTQC          ( fastq_ch )
         adapter_ch          =   FIND_ADAPTERS   ( fastq_ch, fastqc_ch.fastqc_data )
         trimmed_fastq_ch    =   FASTP           ( fastq_ch, adapter_ch )
-        // This needs to be double-checked
+        // Here starts the new parts of code I implemented
         less_rRNA           =   rRNA_REMOVAL    ( trimmed_fastq_ch )
         
     emit:
-        trimmed_fastq_ch.trimmed_fastq
+        less_rRNA.no_rRNA_fastq_ch   // this should be enough to emit the channel with the sample_ID and the files.
+        //trimmed_fastq_ch.trimmed_fastq
 }
