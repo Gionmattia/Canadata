@@ -3,7 +3,10 @@
 process SALMON_QUANT {
 
     tag 'medium'
-	publishDir "${params.output_dir}/salmon_quant", mode: 'copy'
+
+    container "${params.singularity_path}"  // Path to your local Singularity image file
+    containerOptions "--bind ./data"  // Optional: bind specific paths if needed
+    publishDir "${params.output_dir}/salmon_quant", mode: 'copy'
 
     // errorStrategy  { task.attempt <= maxRetries  ? 'retry' :  'ignore' }
 	
@@ -12,7 +15,7 @@ process SALMON_QUANT {
         // 
 	output:
 
-        path "${fastq.baseName}_fastqc/fastqc_data.txt", emit: fastqc_data
+        path "${fastq.baseName}_salmon_quants.sf", emit: salmon_counts
 
     // Need to check the -1 and -2 option actually refers the naming convetions applied so far. It could be different from
     // what expected

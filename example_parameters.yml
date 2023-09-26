@@ -7,3 +7,4 @@ study_dir : "somewhere"
 // This is the directory containing the bowtie indexes. Provisional, not sure if it will work. ChatGPT says yes though.
 rRNA_index : "./data/bowtie_indexes/mmus_rRNAs"
 salmon_index : "./data/salmon_index/salmon_index"
+singularity_path: "./singularity/salmon:1.10.1--h7e5ed60_0"
