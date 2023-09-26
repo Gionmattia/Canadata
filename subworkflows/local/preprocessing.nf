@@ -1,8 +1,8 @@
 // workflow for preprocessing data 
 
+include { FASTQC } from '../../modules/local/fastqc.nf'
 include { FIND_ADAPTERS } from '../../modules/local/find_adapters.nf'
 include { FASTP } from '../../modules/local/fastp.nf'
-include { FASTQC } from '../../modules/local/fastqc.nf'
 include { rRNA_REMOVAL } from '../../modules/local/bowtie.nf'
 
 workflow preprocessing {
