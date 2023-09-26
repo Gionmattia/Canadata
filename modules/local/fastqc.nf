@@ -14,6 +14,7 @@ process FASTQC {
     // Instead it should process each singularly...
     // so...maybe change the tuple structure? I mean, we are processing two at the time...but where do I put the FASTQC report
     // so it is fed to the next step?
+    // WHAT IF I PROCESS THE FILES SINGULARLY IN PREPROCESSING.NF AND COUPLE THEM ONLY FOR QUANTIFICATION.NF?
 
 
 	input:
@@ -21,7 +22,7 @@ process FASTQC {
 
 	output:
 	    path "*_fastqc.html", emit: fastqc_html
-        path "${fastq.baseName}_fastqc/fastqc_data.txt", emit: fastqc_data //should be this emitted as a tuple?
+        path "${fastq.baseName}_fastqc/fastqc_data.txt", emit: fastqc_data //should be this emitted as a tgit uple?
 
     script:
         """
