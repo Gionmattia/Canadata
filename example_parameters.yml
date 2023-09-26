@@ -1,4 +1,4 @@
-input_dir : "sample_data/"
+input_dir : "./data/test_data"  #This needs to be updated -> use fastq folder
 output_dir : "./data/output"
 
 // This directory should host the intermediate files which are not the final output. Or should I put all of them into output?

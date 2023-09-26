@@ -5,6 +5,7 @@ nextflow.enable.dsl=2
 
 /// Import modules and subworkflows
 include { preprocessing } from './subworkflows/local/preprocessing.nf'
+include { quantification } from './subworkflows/local/quantification.nf'
 
 // Log the parameters
 log.info """\
@@ -23,7 +24,7 @@ log.info """\
 // Help Message to prompt users to specify required parameters
 def help() {
     log.info"""
-  Usage:  nextflow run main.nf --input <path_to_fastq_dir> 
+  Usage:  nextflow run main.nf --input_dir <path_to_fastq_dir> 
 
   Required Arguments:
 
