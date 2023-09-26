@@ -49,7 +49,8 @@ workflow {
                         .ifEmpty { exit 1, "No fastq files found in ${params.input_dir}" }
 
     /// Run the subworkflow
-    preprocessing(fastq_ch)
+    preprocessed_files = preprocessing(fastq_ch)
+    quantification(preprocessed_files.less_rRNA.no_rRNA_fastq_ch)  // How do I specify the output?
 }
 
 workflow.onComplete {

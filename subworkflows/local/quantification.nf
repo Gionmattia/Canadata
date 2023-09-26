@@ -11,7 +11,7 @@ workflow quantification {
         salmon_counts       =   SALMON_QUANT          ( less_rRNA.no_rRNA_fastq_ch )
         
     emit:
-        // Needs to be determined based on the output of the SALMON_QUANT process
+        //LOREM  IPSUM     // Needs to be determined based on the output of the SALMON_QUANT process
 
 }
 
