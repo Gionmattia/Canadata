@@ -51,7 +51,7 @@ workflow {
 
     /// Run the subworkflow
     preprocessed_files = preprocessing(fastq_ch)
-    quantification(preprocessed_files.less_rRNA.no_rRNA_fastq_ch)  // How do I specify the output?
+    quantification(preprocessed_files)  // How do I specify the output?
 }
 
 workflow.onComplete {

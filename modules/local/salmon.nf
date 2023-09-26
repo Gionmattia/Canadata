@@ -12,7 +12,7 @@ process SALMON_QUANT {
     // errorStrategy  { task.attempt <= maxRetries  ? 'retry' :  'ignore' }
 	
 	input:
-	    tuple val(sample_id), path("*.fastq.gz") from no_rRNA_fastq_ch // OR COULD BE "from less_rRNA.no_rRNA_fastq_ch"
+	    tuple val(sample_id), path("*.fastq.gz")// from no_rRNA_fastq // OR COULD BE "from less_rRNA.no_rRNA_fastq_ch"
 
 	output:
 
