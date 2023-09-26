@@ -62,15 +62,15 @@ index_dict = {
     "GTTCGGTT-TGCCTCAA": "Rep4_BPanoi_poly",
 }
 
-def rename_files (folder_path, format, output_path):
+def rename_files (folder_path, extension, output_path):
 
     # Iterates through the files in the given path
 
     for filename in os.listdir(folder_path):
 
-        # Checks if the file matches the specified format
+        # Checks if the file matches the specified extension
 
-        if format in filename:
+        if extension in filename:
 
             # Retrieves the nucleotide index (the index applied by the sequencing lab)
 
@@ -96,7 +96,7 @@ def rename_files (folder_path, format, output_path):
 
             # Assembles the new name
 
-            new_name = Y + "_" + X + "_" + rep_number + format
+            new_name = Y + "_" + X + "_" + rep_number + extension
 
             # Reconstructs the old and the new path
             
@@ -118,15 +118,15 @@ def rename_files (folder_path, format, output_path):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="renames the Canadata files accordingly")
     parser.add_argument("folder_path", type = str, help = "Path to the folder containing the data")
-    parser.add_argument("format", type = str, help = "format of the files to rename (ex. '.fastq.gz', '.html'...)")
+    parser.add_argument("extension", type = str, help = "extension of the files to rename (ex. '.fastq.gz', '.html'...)")
     parser.add_argument("output_path", type = str, help = "outhput folder path")
     args = parser.parse_args()
 
     print("Folder currently searched ", args.folder_path)
-    print("Format currently selected ", args.format)
+    print("Extension currently selected ", args.extension)
 
     # AND NOW YOU CALL THE RENAME FUNCTION FROM HERE
-    rename_files(args.folder_path, args.format, args.output_path)
+    rename_files(args.folder_path, args.extension, args.output_path)
 
     #df = check_and_assign_header(df) 
     #save_with_new_name(df, args.Path)
