@@ -6,11 +6,11 @@ process rRNA_REMOVAL {
     publishDir "${params.output_dir}/bowtie", mode: 'copy' // NOT SURE I NEED THIS LINE OF CODE, STUFF COULD BE EMITTED IN A CHANNEL
 
     input:
-    tuple val(sample_id), path(trimmed_fastq) from trimmed_fastq_ch
+    tuple val(sample_id), path(trimmed_fastq)
 
     output:
     // Tried to implement the same code as in the other modules, so the base_name is used.
-    tuple val(sample_id), path("${trimmed_fastq.baseName}_less_rRNA.fastq.gz") into no_rRNA_fastq_ch  //originally it was ("${sample_id}_less_rRNA.fastq.gz")
+    tuple val(sample_id), path("${trimmed_fastq.baseName}_less_rRNA.fastq.gz"), emit: no_rRNA_fastq  //originally it was ("${sample_id}_less_rRNA.fastq.gz")
 
     script:
     """

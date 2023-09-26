@@ -9,7 +9,7 @@ process FASTP {
     file adapter_report
 
     output:
-    path '*_clipped.fastq', emit: trimmed_fastq
+    tuple val(sample_id), path ("${raw_fastq.baseName}_clipped.fastq"), emit: trimmed_fastq
     path '*.json', emit: fastp_json
     path '*.html', emit: fastp_html
 
