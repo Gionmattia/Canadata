@@ -21,3 +21,6 @@ workflow preprocessing {
         less_rRNA.no_rRNA_fastq_ch   // this should be enough to emit the channel with the sample_ID and the files.
         //trimmed_fastq_ch.trimmed_fastq
 }
+
+
+//technically, I am specifying here to take from less_rRNA the channel, I don't need to specify that down the line as well

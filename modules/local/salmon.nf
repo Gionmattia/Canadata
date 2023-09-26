@@ -8,11 +8,10 @@ process SALMON_QUANT {
     // errorStrategy  { task.attempt <= maxRetries  ? 'retry' :  'ignore' }
 	
 	input:
-	    file fastq // think these two needs to be updated
-        file index 
-
+	    tuple val(sample_id), path("*.fastq.gz") from no_rRNA_fastq_ch // OR COULD BE "from less_rRNA.no_rRNA_fastq_ch"
+        // 
 	output:
-	    path "*_fastqc.html", emit: fastqc_html                                 // I think this needs updating as well
+
         path "${fastq.baseName}_fastqc/fastqc_data.txt", emit: fastqc_data
 
     // Need to check the -1 and -2 option actually refers the naming convetions applied so far. It could be different from
@@ -29,3 +28,5 @@ process SALMON_QUANT {
             -o "$sample""quant"        
     """
 }
+
+// -o should make use of "sampleID" to name the stuff.
