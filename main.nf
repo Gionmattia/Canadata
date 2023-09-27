@@ -43,15 +43,17 @@ workflow {
     // fastq_ch = Channel.fromPath("${params.samplesheet}").splitCsv(header: true)
     // fastq_ch.view()
     // /// Define the input channels
-    // fastq_ch = Channel.fromPath("${params.input_dir}/*.fastq.gz")
-    //                     .ifEmpty { exit 1, "No fastq files found in ${params.input_dir}" }
-
-    fastq_ch = Channel.fromFilePairs("${params.input_dir}/*{1,2}.fastq.gz", size: 2)
+    // fastq_ch = Channel.fromFilePairs("${params.input_dir}/*{1,2}.fastq.gz", size: 2)
+    //                    .ifEmpty { exit 1, "No fastq files found in ${params.input_dir}" }
+    
+    fastq_ch = Channel.fromPath("${params.input_dir}/*.fastq.gz")
                         .ifEmpty { exit 1, "No fastq files found in ${params.input_dir}" }
+    fastq_ch.view()
 
     /// Run the subworkflow
     preprocessed_files = preprocessing(fastq_ch)
-    quantification(preprocessed_files)  // How do I specify the output?
+    preprocessed_files.view()
+    //quantification(preprocessed_files)  // How do I specify the output?
 }
 
 workflow.onComplete {

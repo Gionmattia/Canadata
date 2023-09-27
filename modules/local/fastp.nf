@@ -5,11 +5,11 @@ process FASTP {
     // errorStrategy 'ignore'
     
     input:
-    tuple val(sample_id), file(raw_fastq)
-    file adapter_report
+    path(raw_fastq) // tuple val(sample_id), file(raw_fastq)
+    path(adapter_report)  // file adapter_report
 
     output:
-    tuple val(sample_id), path ("${raw_fastq.baseName}_clipped.fastq"), emit: trimmed_fastq
+    path ("${raw_fastq.baseName}_clipped.fastq"), emit: trimmed_fastq
     path '*.json', emit: fastp_json
     path '*.html', emit: fastp_html
 

@@ -18,12 +18,12 @@ process FASTQC {
 
 
 	input:
-        tuple val(sample_id), file(fastq)
+        path(fastq) // tuple val(sample_id), file(fastq)
 
 	output:
 	    path "*_fastqc.html", emit: fastqc_html
-        path "${fastq.baseName}_fastqc/fastqc_data.txt", emit: fastqc_data //should be this emitted as a tgit uple?
-
+        // path "${fastq.baseName}_fastqc/fastqc_data.txt", emit: fastqc_data //should be this emitted as a tgit uple?
+        path "${fastq.baseName.minus('.fastq')}_fastqc/fastqc_data.txt", emit: fastqc_data
     script:
         """
         fastqc --extract -q $fastq --adapters ${projectDir}/scripts/adapter_list.tsv --dir ${projectDir}/data/temp

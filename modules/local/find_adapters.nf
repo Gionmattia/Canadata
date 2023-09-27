@@ -4,8 +4,8 @@ process FIND_ADAPTERS {
     // errorStrategy  { task.attempt <= maxRetries  ? 'retry' :  'ignore' }
 
     input:
-        tuple val(sample_id), file(raw_fastq) //sample_id is automatically generated from the channel.frompairs.
-        file fastqc_data
+        path(raw_fastq) // tuple val(sample_id), file(raw_fastq)
+        path(fastqc_data)
 
     output:
         file "*_adpater_report.fa"
