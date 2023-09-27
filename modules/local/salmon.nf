@@ -1,5 +1,3 @@
-
-
 process SALMON_QUANT {
 
     // THESE INFO SHOULD ALL BE PUT WITHIN THE nextflow.config FILE (or so I suppose...it just makes sense)

@@ -48,12 +48,16 @@ workflow {
     
     fastq_ch = Channel.fromPath("${params.input_dir}/*.fastq.gz")
                         .ifEmpty { exit 1, "No fastq files found in ${params.input_dir}" }
-    fastq_ch.view()
 
-    /// Run the subworkflow
+    // Run the subworkflow "preprocessing"
     preprocessed_files = preprocessing(fastq_ch)
-    preprocessed_files.view()
-    //quantification(preprocessed_files)  // How do I specify the output?
+
+    // Collect the preprocessed files in pairs
+    salmon_inputs = Channel.fromFilePairs("${params.output_dir}/bowtie/*{1,2}.fastq.gz", size: 2)
+                        .ifEmpty { exit 1, "No fastq.gz files found" }
+
+    // Run the subworkflow "quantification"
+    quantification(salmon_inputs)
 }
 
 workflow.onComplete {

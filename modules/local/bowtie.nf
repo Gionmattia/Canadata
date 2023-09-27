@@ -10,7 +10,7 @@ process rRNA_REMOVAL {
 
     output:
     // Tried to implement the same code as in the other modules, so the base_name is used.
-    path("${trimmed_fastq.baseName}_less_rRNA.fastq.gz"), emit: no_rRNA_fastq  //originally it was ("${sample_id}_less_rRNA.fastq.gz")
+    path("${trimmed_fastq.baseName}_less_rRNA.fastq.gz") // , emit: no_rRNA_fastq  //originally it was ("${sample_id}_less_rRNA.fastq.gz")
 
     script:
     """

@@ -5,10 +5,10 @@ include { SALMON_QUANT } from '../../modules/local/salmon.nf'
 workflow quantification {
 
     take: 
-        no_rRNA_fastq    // OR Coudl be "less_rRNA.no_rRNA_fastq_ch"   needs to be determined from the output of the previous subworkflow.
+        salmon_inputs    // OR Coudl be "less_rRNA.no_rRNA_fastq_ch"   needs to be determined from the output of the previous subworkflow.
 
     main:
-        salmon_counts       =   SALMON_QUANT          ( no_rRNA_fastq )
+        salmon_counts       =   SALMON_QUANT          ( salmon_inpits )
         
     //emit:
         //LOREM  IPSUM     // Needs to be determined based on the output of the SALMON_QUANT process
