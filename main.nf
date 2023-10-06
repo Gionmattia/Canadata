@@ -46,14 +46,14 @@ workflow {
     // fastq_ch = Channel.fromFilePairs("${params.input_dir}/*{1,2}.fastq.gz", size: 2)
     //                    .ifEmpty { exit 1, "No fastq files found in ${params.input_dir}" }
     
-    fastq_ch = Channel.fromPath("${params.input_dir}/*.fastq.gz")
-                        .ifEmpty { exit 1, "No fastq files found in ${params.input_dir}" }
+    //fastq_ch = Channel.fromPath("${params.input_dir}/*.fastq.gz")
+    //                    .ifEmpty { exit 1, "No fastq files found in ${params.input_dir}" }
 
     // Run the subworkflow "preprocessing"
-    preprocessed_files = preprocessing(fastq_ch)
+    //preprocessed_files = preprocessing(fastq_ch)
 
     // Collect the preprocessed files in pairs
-    salmon_inputs = Channel.fromFilePairs("${params.output_dir}/bowtie/*{1,2}.fastq.gz", size: 2)
+    salmon_inputs = Channel.fromFilePairs("${params.output_dir}/bowtie/*{1,2}.fastq_clipped_less_rRNA.fastq.gz", size: 2)
                         .ifEmpty { exit 1, "No fastq.gz files found" }
 
     // Run the subworkflow "quantification"
