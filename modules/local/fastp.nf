@@ -4,8 +4,16 @@ process FASTP {
 
     // errorStrategy 'ignore'
     
+
+    // Currently takes as input the tuple, with the paired files.
     input:
-    path(raw_fastq) // tuple val(sample_id), file(raw_fastq)
+    tuple val(sample_id), file(raw_fastq)  // path(raw_fastq) 
+
+    // Need to take in BOTH adapter reports!
+    // OR
+    // Could just take the reports from the folder where they are stored instead, so that I don't
+    // have the fuss of moving them across.
+    
     path(adapter_report)  // file adapter_report
 
     output:
