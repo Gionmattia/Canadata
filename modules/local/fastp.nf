@@ -26,6 +26,8 @@ process FASTP {
     // NEXT APPROACH: I am just passing all the 4 arguments to the bash script
     // (the read1, the read2, the adapter_report1 and the adapter_report2)
 
+    //I SHOULD ASK AGAIN IF THE SAME READ FILE COULD HAVE MORE THAN ONE ADAPTER IN THE REPORT!!
+
 	"""
 
     file1 = "${params.output_dir}/adapter_reports/${sample_id}__1.fastq.gz_adpater_report.fa"
