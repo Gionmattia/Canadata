@@ -12,6 +12,6 @@ process FIND_ADAPTERS {
 
     script:
         """
-        python3 ${projectDir}/scripts/get_adapters.py -i $fastqc_data -a ${projectDir}/scripts/adapter_list.tsv -o "${raw_fastq}_adpater_report.fa"
+        python3 ${projectDir}/scripts/get_adapters.py -i $fastqc_data -a ${projectDir}/scripts/adapter_list.tsv -o "${raw_fastq}_adapter_report.fa"
         """
 }
