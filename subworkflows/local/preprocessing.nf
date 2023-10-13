@@ -17,10 +17,13 @@ workflow preprocessing {
         
         // NEED TO TRY IMPLEMENT THE fastq_ch_single below!
         fastqc_ch           =   FASTQC          ( fastq_ch_single )
-        adapter_ch          =   FIND_ADAPTERS   ( fastq_ch_single, fastqc_ch.fastqc_data )
+        adapter_ch          =   FIND_ADAPTERS   ( fastqc_ch.fastqc_data )
+        adapter_ch.collect()
 
         // Need to add to its arguments also the second adapter report channel...?
-        trimmed_fastq_ch    =   FASTP           ( fastq_ch_paired)  //  ( fastq_ch_paired, adapter_ch )  
+        trimmed_fastq_ch    =   FASTP           ( fastq_ch_paired )
+        trimmed_fastq_ch.trimmed_fastq.view()
+
         // ORIGINALLY trimmed_fastq_ch    =   FASTP           ( fastq_ch, adapter_ch )
         //less_rRNA           =   rRNA_REMOVAL    ( trimmed_fastq_ch.trimmed_fastq )
         //less_rRNA.collect()
