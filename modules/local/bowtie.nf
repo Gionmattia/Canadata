@@ -2,39 +2,34 @@ process rRNA_REMOVAL {
 
     // This processes removes rRNAs, Mt_rRNAs and Mt_tRNAs
 
-    label 'cpu_12'  // custom label for requesting 12 CPUs, define in your resources configuration
+    label 'cpu_12' 
     publishDir "${params.output_dir}/bowtie", mode: 'copy'
 
     input:
-    // NEED TO UPDATE TO RECENT VERSION!
-
-    tuple path(sample_id), path(reads)
-
+    tuple path(reads1), path(reads2)
 
     output:
-    // CHECK AND FIX THIS
-    tuple path("${read1.baseName}_less_rRNA.fastq.gz"), path("${read2.baseName}_less_rRNA.fastq.gz"), emit: no_rRNA_fastq
-    //path("${trimmed_fastq.baseName}_less_rRNA.fastq.gz") // , emit: no_rRNA_fastq 
-
+    // When run in PE mode, bowtie will generate two files for each read-file, with the same
+    // <basename> + "_1" or "_2"
+    tuple path("*less_rRNA_1.fastq"), path("*less_rRNA_2.fastq"), emit: no_rRNA_fastq
 
     script:
-
-    // NEED TO IMPLEMENT IN THE CODE THE PE MODE (-1,-2 args?)
-    // NEED TO UNPACK THE TUPLE AS USUAL
+    // This script just retrieves the sample name from the path, to use as <basename> in bowtie
+    // This is done because bowtie does not allow to keep the names of the original read files
+    // when used to filter away RNAs...
+    
+    def str_sample = "${reads1}"
+    def sample_name = str_sample.split("/")[-1]
+    def stripped_sample_name = "${sample_name.minus("__1.fastq_clipped.fastq")}"
+    
     """
-    bowtie -p ${task.cpus} -v 3 ${params.rRNA_index} -1 ${read1} -2 ${read2} --un ${sample_id}_less_rRNA.fastq.gz >> screen_output.txt 2>&1
+    bowtie -p ${task.cpus} -v 3 ${params.rRNA_index} \
+    -1 ${reads1} \
+    -2 ${reads2} \
+    --un ${stripped_sample_name}_less_rRNA.fastq >> screen_output.txt 2>&1
     """
 
-    // TO DO ON MONDAY:
-    // - Fix cardinality, the tuple needs to be unpacked before giving it to the script.
-    // - Updated script code to work on PE
-    // - Check how the "un" option names the read files and if consistent with the names so far.
-    // - Test run and troubleshoot. There will be minor issues.
-    // - Check output formats.
     // PREPARE TO THE TRANSITION TO SALMON. NOW EVERYTHING SHOULD BE SUBMITTED AS A TUPLE CHANNEL, FINALLY.
     // Nb. remember to fix the salmon.nf to use the absolute paths given by ${projectDir}
 
-    //"""
-    //bowtie -p ${task.cpus} -v 3 ${params.rRNA_index} -q ${trimmed_fastq} --un ${trimmed_fastq.baseName}_less_rRNA.fastq.gz >> screen_output.txt 2>&1
-    //"""
 }

@@ -25,7 +25,8 @@ workflow preprocessing {
         trimmed_fastq_ch.trimmed_fastq.view()
 
         // ORIGINALLY trimmed_fastq_ch    =   FASTP           ( fastq_ch, adapter_ch )
-        //less_rRNA           =   rRNA_REMOVAL    ( trimmed_fastq_ch.trimmed_fastq )
-        //less_rRNA.collect()
+        //rRNA_REMOVAL    ( trimmed_fastq_ch.trimmed_fastq )
+        less_rRNA           =   rRNA_REMOVAL    ( trimmed_fastq_ch.trimmed_fastq )
+        less_rRNA.view()
 
 }
