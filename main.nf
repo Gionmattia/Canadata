@@ -61,6 +61,8 @@ workflow {
 
     // Run the subworkflow "quantification"
     //quantification(salmon_inputs)
+
+    quantified_files = quantification(preprocessed_files)
 }
 
 workflow.onComplete {

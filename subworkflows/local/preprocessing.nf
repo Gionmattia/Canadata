@@ -22,11 +22,10 @@ workflow preprocessing {
 
         // Need to add to its arguments also the second adapter report channel...?
         trimmed_fastq_ch    =   FASTP           ( fastq_ch_paired )
-        trimmed_fastq_ch.trimmed_fastq.view()
 
-        // ORIGINALLY trimmed_fastq_ch    =   FASTP           ( fastq_ch, adapter_ch )
         //rRNA_REMOVAL    ( trimmed_fastq_ch.trimmed_fastq )
         less_rRNA           =   rRNA_REMOVAL    ( trimmed_fastq_ch.trimmed_fastq )
-        less_rRNA.view()
 
+    emit:
+        less_rRNA
 }
