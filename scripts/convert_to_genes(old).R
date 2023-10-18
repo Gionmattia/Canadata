@@ -4,7 +4,6 @@ args <- commandArgs(trailingOnly = TRUE)
 path_to_file <- args[1]
 path_to_annotation_file <- args[2]
 
-
 # tximport is used to convert from Transcripts to Genes,
 # GenomicFeatures creates the conversion table from transcriptID to geneID
 
@@ -20,7 +19,13 @@ transcripts <- keys(txdb, keytype = "TXNAME")
 tx2gene <- select(txdb, keys = transcripts, keytype = "TXNAME", columns = "GENEID") # nolint
 tx2gene <- subset(tx2gene, select = c("TXNAME", "GENEID"))
 
+# Define a function to remove the transcript versions
+remove_string <- function(x) {
+  gsub("\\..*", "", x)
+}
 
+# Remove the transcript version from tx2gene
+tx2gene[, 1] <- apply(tx2gene[, 1, drop = FALSE], 1, remove_string)
 
 # call tximport on the single file to get the output (it's a complex list)
 output <- tximport(path_to_file, type = "salmon",
@@ -67,3 +72,4 @@ for (root in missing_transcripts) {
 # It's the one that contains most of the transcript IDs identified by the salmon index adopted
 # during the counting step
 
+# The option to ignore the version is still not available. Nice. 
