@@ -11,6 +11,7 @@ workflow quantification {
     main:
         salmon_counts       =   SALMON_QUANT          ( less_rRNA )
         gene_counts         =   TXIMPORT              ( salmon_counts.quant_sf )
+        gene_counts.collect()
         
     //emit:
         //LOREM  IPSUM     // Needs to be determined based on the output of the SALMON_QUANT process
