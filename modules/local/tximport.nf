@@ -15,7 +15,7 @@ process TXIMPORT {
     script:
     
     """
-    Rscript tximport_convert.R ${quant_file} ${params.annotation_path} 
+    Rscript ${projectDir}/scripts/tximport_convert.R ${quant_file} ${params.annotation_path} 
     """
 
 }
