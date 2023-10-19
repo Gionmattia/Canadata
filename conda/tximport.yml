@@ -1,0 +1,10 @@
+name: tximport
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - r-base=4.2.2=ha7d60f8_3
+  - r-base64enc=0.1_3=r42h06615bd_1005
+  - bioconductor-tximport=1.26.0
+  - bioconductor-genomicfeatures=1.50.2
