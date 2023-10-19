@@ -35,14 +35,16 @@ output <- tximport(path_to_file, type = "salmon",
 output_df <- data.frame(output$counts)
 
 # Rename the column accordingly to sample name  # Still keeps those weird nts...
-sample_name <- sub("_quant\\.sf$", "", file)
+sample_name <- sub("_quant\\.sf$", "", path_to_file)
 colnames(output_df)[1] <- sample_name
 
 # Creates the new name and saves everything as a tsv in the working directory.
-output_file_name <- paste0(path_to_output, sample_name, "_gene_counts.tsv")
+output_file_name <- paste0(sample_name, "_gene_counts.tsv")
 write.table(output_df, output_file_name, sep = "\t", row.names = TRUE)
 
 # OPERATIONS TO RETRIEVE THE UNCONVERTED IDs
+# If no transcript is missing, no output will be produced
+
 # Read the original file
 data <- read.csv(path_to_file, header = TRUE, sep = "\t")
 data_mod <- data
@@ -62,14 +64,6 @@ for (root in missing_transcripts) {
   write.table(missing_data, missing_data_name, sep = "\t", row.names = TRUE)
   }
 
-
-  
-# I have decided to use an "agnostic" tx2gene table, in which I manually removed 
+# I have decided to use an "agnostic" tx2gene table, in which I manually removed
 # the transcript version from the new annotation I used.
 # This because the "ignoreTxVersion"of tximport wasn't working.
-
-# I used the GENCODE release VM22 (released 06.2019 and based on the genome assembly GRCm38.p6) since
-# It's the one that contains most of the transcript IDs identified by the salmon index adopted
-# during the counting step
-
-# The option to ignore the version is still not available. Nice. 
