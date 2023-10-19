@@ -1,6 +1,7 @@
 // workflow for counting reads 
 
 include { SALMON_QUANT } from '../../modules/local/salmon.nf'
+include { TXIMPORT     } from "../../modules/local/tximport.nf" 
 
 workflow quantification {
 
@@ -8,7 +9,8 @@ workflow quantification {
         less_rRNA    // salmon_inputs
         
     main:
-        salmon_counts       =   SALMON_QUANT          ( less_rRNA ) // ++  salmon_inputs
+        salmon_counts       =   SALMON_QUANT          ( less_rRNA )
+        gene_counts         =   TXIMPORT              ( salmon_counts.quant_sf )
         
     //emit:
         //LOREM  IPSUM     // Needs to be determined based on the output of the SALMON_QUANT process
