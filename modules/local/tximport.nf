@@ -1,6 +1,6 @@
 process TXIMPORT {
-
-    tag 'medium'
+    label 'cpu_12'
+    //tag 'medium'
     publishDir "${params.output_dir}/gene_counts", mode: 'copy'
 
     // errorStrategy  { task.attempt <= maxRetries  ? 'retry' :  'ignore' }

@@ -1,4 +1,4 @@
-input_dir : "./data/test_data/fastq"
+input_dir : "./data/fastq"
 output_dir : "./data/output"
 # These should be given by the user when setting up the pipeline locally
 rRNA_index : "${projectDir}/data/bowtie_indexes/mmus_rRNAs"

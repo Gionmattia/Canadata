@@ -1,6 +1,6 @@
 process SALMON_QUANT {
-
-    tag 'medium'
+    label 'cpu_12'
+    //tag 'medium'
     publishDir "${params.output_dir}/salmon_quants", mode: 'copy'
 
     // errorStrategy  { task.attempt <= maxRetries  ? 'retry' :  'ignore' }

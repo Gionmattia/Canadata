@@ -1,4 +1,5 @@
 process FASTP {
+    label 'cpu_12'
     publishDir "${params.output_dir}/fastp", mode: 'copy', pattern: '*.json'
     publishDir "${params.output_dir}/fastp", mode: 'copy', pattern: '*.html'
 
@@ -7,8 +8,8 @@ process FASTP {
 
     // Currently takes as input the tuple, with the paired files.
     input:
-    tuple val(sample_id), file(raw_fastq)  // path(raw_fastq) 
-
+    tuple val(sample_id), file(raw_fastq)
+    val dummy_string
     
     // Change the output so it gets the two files in output
     output:
@@ -24,8 +25,8 @@ process FASTP {
     def reads1 = raw_fastq[0]
     def reads2 = raw_fastq[1]
 
-    def file1 = "${projectDir}/data/output/adapter_reports/${sample_id}__1.fastq.gz_adpater_report.fa"
-    def file2 = "${projectDir}/data/output/adapter_reports/${sample_id}__2.fastq.gz_adpater_report.fa"
+    def file1 = "${projectDir}/data/output/adapter_reports/${sample_id}__1.fastq.gz_adapter_report.fa"
+    def file2 = "${projectDir}/data/output/adapter_reports/${sample_id}__2.fastq.gz_adapter_report.fa"
     
     """
     bash ${projectDir}/scripts/FASTP_run.sh "$reads1" "$reads2" "$file1" "$file2"

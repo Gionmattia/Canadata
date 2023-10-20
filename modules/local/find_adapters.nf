@@ -1,4 +1,5 @@
 process FIND_ADAPTERS {
+    label 'cpu_12'
 	publishDir "${params.output_dir}/adapter_reports", mode: 'copy'
     
     // errorStrategy  { task.attempt <= maxRetries  ? 'retry' :  'ignore' }
@@ -9,9 +10,12 @@ process FIND_ADAPTERS {
 
     output:
         file "*_adapter_report.fa"
+        // The following is a dummy string used to create a dependency between this process and FASTP
+        val "synchronising node", emit: dummy_string
 
     script:
         """
         python3 ${projectDir}/scripts/get_adapters.py -i $fastqc_data_txt -a ${projectDir}/scripts/adapter_list.tsv -o "${raw_fastq}_adapter_report.fa"
+        echo "synchronising node"
         """
 }
