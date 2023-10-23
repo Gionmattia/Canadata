@@ -2,8 +2,7 @@
 
 process FASTQC {
 
-    tag 'medium'
-
+    label 'cpu_12'
 	publishDir "${params.output_dir}/fastqc", mode: 'copy'
 
     // errorStrategy  { task.attempt <= maxRetries  ? 'retry' :  'ignore' }
