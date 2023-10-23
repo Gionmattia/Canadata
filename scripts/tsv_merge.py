@@ -32,17 +32,20 @@ def tsv_merger(file_paths):
     '''
     try:
         # Initialize the base DataFrame with the first file in the list
+        print(f"Processing {file_paths[0]}.")
         base_df = pd.read_csv(file_paths[0], sep="\t")
-        base_df["Name"] = base_df.index
+        base_df.insert(0, 'Name', base_df.index) 
+        #base_df["Name"] = base_df.index
 
         # Loop through the remaining files and merge them into the base DataFrame
         for file_path in file_paths[1:]:
             temp_df = pd.read_csv(file_path, sep="\t")
             if "Name" not in temp_df.columns:
-                print(f"The file {file_path} doesn't have a 'Name' column. Skipping.")
+                print(f"Processing {file_path}.")
+                temp_df["Name"] = temp_df.index
+                base_df = pd.merge(base_df, temp_df, on="Name", how="outer")
                 continue
-            temp_df["Name"] = temp_df.index
-            base_df = pd.merge(base_df, temp_df, on="Name", how="outer")
+
 
         return base_df
 
@@ -71,5 +74,3 @@ if __name__ == "__main__":
     full_file_paths = [os.path.join(args.input_dir, file_name) for file_name in files]
     merged_tsv = tsv_merger(full_file_paths)
     tsv_saver(merged_tsv, args.output_name)
-
-# NEED TO TEST THE BEHAVIOUR OF THIS NEW FUNCTION
