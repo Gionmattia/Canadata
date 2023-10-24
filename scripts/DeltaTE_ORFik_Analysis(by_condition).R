@@ -275,7 +275,9 @@ plot.title <- paste("Condition: ctrl |", case, "(target) vs", baseline, "(baseli
 plot <- DTEG.plot(dt, output.dir, p.value = 0.05, plot.title, width = 6, height = 6,
                   relative.name = "ctrl_subset_contrast_cell.pdf")
 
-fwrite(dt, file = "./ORFik_output/ctrl_subset_contrast_cell.csv")
+file_name <- paste("./ORFik_output/ctrl_subset", case, "vs", baseline)
+file_name <- gsub(" ", "_", file_name)
+fwrite(dt, file = file_name)
 
 
 ###### ANALYSIS ONLY FOR ANOI ######
@@ -329,4 +331,8 @@ plot.title <- paste("Condition: anoi |", case, "(target) vs", baseline, "(baseli
 plot <- DTEG.plot(dt, output.dir, p.value = 0.05, plot.title, width = 6, height = 6,
                   relative.name = "anoi_subset_contrast_cell.pdf")
 
-fwrite(dt, file = "./ORFik_output/anoi_subset_contrast_cell.csv")
+file_name <- paste("./ORFik_output/anoi_subset", case, "vs", baseline)
+file_name <- gsub(" ", "_", file_name)
+fwrite(dt, file = file_name)
+
+

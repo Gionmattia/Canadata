@@ -270,8 +270,9 @@ plot.title <- paste("Cell: VC |", case, "(target) vs", baseline, "(baseline)")
 plot <- DTEG.plot(dt, output.dir, p.value = 0.05, plot.title, width = 6, height = 6,
                   relative.name = "VC_subset_contrast_condition.pdf")
 
-fwrite(dt, file = "./ORFik_output/VC_subset_contrast_condition.csv")
-
+file_name <- paste("./ORFik_output/VC_subset", case, "vs", baseline)
+file_name <- gsub(" ", "_", file_name)
+fwrite(dt, file = file_name)
 
 ###### ANALYSIS ONLY FOR BP ######
 
@@ -324,5 +325,6 @@ case <- pairs[[1]][1]
 plot.title <- paste("Cell: BP |", case, "(target) vs", baseline, "(baseline)")
 plot <- DTEG.plot(dt, output.dir, p.value = 0.05, plot.title, width = 6, height = 6,
                   relative.name = "BP_subset_contrast_condition.pdf")
-
-fwrite(dt, file = "./ORFik_output/BP_subset_contrast_condition.csv")
+file_name <- paste("./ORFik_output/BP_subset", case, "vs", baseline)
+file_name <- gsub(" ", "_", file_name)
+fwrite(dt, file = file_name)
