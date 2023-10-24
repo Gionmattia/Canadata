@@ -1,0 +1,10 @@
+name: delthena
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - r-base=4.2.2=ha7d60f8_3
+  - bioconductor-orfik=1.18
+  - bioconductor-deseq2=1.38
+  - r-data.table=1.14.8
