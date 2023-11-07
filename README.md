@@ -10,7 +10,7 @@ It has been firstly used in the scope of "Project Canada".
 
 
 ## Requirements 
-This pipeline can be run using each of the following container methods
+This pipeline is run using the following container methods
 | Method      | Instructions                                                                                   |
 | ----------- | ---------------------------------------------------------------------------------------------- |
 | Singularity | [docs.syslabs.io](https://docs.sylabs.io/guides/3.0/user-guide/installation.html)              |
@@ -22,31 +22,31 @@ The main.nf pipeline comprises two different sub-workflows, named "preprocessing
 - Preprocessing.nf collects the raw files, performs quality checks and removes adapters and contaminants (more details in each process section).
 - Quantification.nf takes PE files and proceeds to ontain transcript counts. These are then converted to gene counts.
 
-### Extra appendages
-
-#### Required files for the analysis
+## Required files for the analysis
 This pipeline requires several files (annotations, indexes or similar) in order to be executed.
 Given that many research lab could already have such files, the commands to obtain or create them have not been added to the main pipeline.
 In case users do not have such files (or do not know what those are), all the commands used to retrieve/create them have been compiled into a set of instructions inside this documentation.
 
-#### Downstream DTA analysis
+## Downstream DTA analysis
 In the specific scope of "Project Canadata", the gene count files have also been merged and then used as input for  Differential Translation Analysis.
 Considering the study-specific nature of the analysis (and the need for user input) these steps have not been added to the main pipeline.
 Instead, the instruction to re-create the virtual environment (as well as all the executable scripts used) have been added to this directory to ensure reproducibility.
 
 All the steps carried are also clearly documented, so that users can re-execute the analysis on their own machine.
 
-
-##### Input files needed
+<br>
 
 
 ## Setup
 ##### Input files needed
 
-- Indexes and how to create them (step by step guide).
+- Indexes and annotation files.
 - parameters.yml file.
 - nextflow.config file.
 - experimental design file.
+- Your data.
+
+For details about each input, see sections below.
 
 <br>
 
@@ -152,9 +152,41 @@ _Congrats, you have made it!_
 
 
 
+<br>
+
+
+## Parameters.yml file
+
+You can see an example of such file in the canadata repository. This file holds several variables (hard-coded paths) used by the nextlfow pipeline.
+The pipeline also assumes you are running _main.nf_ from the canadata folder, once dloned locally.
+- _input_dir_ -> The directory holding your fastq files.
+- _output_dir_ -> The directory holding your output files. It is **mandatory** for the user to create the directory as a subdirectory of _data_ and to name it _output_
+- _rRNA_index_ -> The path to the rRNA/mtRNA indexes you built in the previous section.
+- _salmon_index_ -> The path to the salmon indexes you built in the previous setion.
+- _singularity_path_ -> The path to the singularity image used to create the salmon container.
+- _annotation_path_ -> The path to the annotation files (.gtf) that is needed by tximport.nf).
+
+**NB. It is advisable to give the hard-coded path to the _salmon_index_ variable, since the machine could have issues when builded to bind the directory with the index.**
 
 
 <br>
+
+## Nextflow.config file
+
+This file stores the configurations used by the pipeline when running. For reproducibility purposes, it should stay the same.
+HOWEVER, this is also the file where the allocation of computational resources for each process are determined.
+Before running the pipeline, check your capabilities of your local machine. You might want to adjust the following two parameters for each process:
+- _maxForks_ -> Determines how many times the process can be run in parallel at the same time.
+- _cpus_ (under the section profiles/standard/withLabel of the config file) -> It allocates by default 12 cpus to each process. You might want to reduce this number or come up with a different profile.
+
+Each process is allowed _at most_ 12 CPUs per execution (some won't even get past 1, that is just a cap). Be aware that this value is _per process_: if you allow a process to have maxForks=2, then that process could end up suing up to 24 CPUs in total (12 per each of the two parallel executions).
+Some processes will not go past 1CPU per execution (like FASTQC) but others will and could cause your system to crush!
+
+In addition, once a file is ready to move to the next process, it will, thus increasing the resource consumptions!
+For instance, let's assume you are processing 10 files. 6 could be in the first process (6 CPUs used), 2 could be in the second (12 CPus each) and the last 2 in the third (12 CPUs each again), thus determining a total consumption of 42 CPUs! Our server was fine, but that could be too much for other machines. If that's the case, adjust the value of _cpus_ from 12 to something more manageable by your system.
+
+Be aware of your system capabilities before running this pipeline.
+
 
 ### How to create the bowtie index 
 ```
