@@ -46,7 +46,62 @@ All the steps carried are also clearly documented, so that users can re-execute 
 - Indexes and how to create them (step by step guide).
 - parameters.yml file.
 - nextflow.config file.
-- -experimental design file.
+- experimental design file.
+
+
+## Indexes and annotation files needed
+
+Several processes in this pipeline will require to use indexes or annotation files (bowtie.nf, salmon.nf, tximport.nf). This section explains how to create each file and where to store them.
+The following tutorial will use the annotations and indexes used in this study as an example.
+
+### Bowtie.nf
+
+This module requires an index of the RNAs that the user wants to remove. Such index needs to be built from scratch.
+You will need to use the following libraries and tools: wget, gunzip, python3 (libraries: argparse, Bio, SeqIo), bowtie.
+**NB. If you do not have bowtie on your machine, you can create a conda environment with it (see end of this section)**
+
+First, download the latest gencode fasta files containing the RNAs sequences.
+
+```
+wget https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M33/gencode.vM33.transcripts.fa.gz
+```
+
+Then, unzip the file.
+
+```
+gunzip gencode.vM33.transcripts.fa.gz
+```
+
+Run the script "extract_rRNAs_mtRNAs.py" from the script folder of this Github repo. This script requires two arguments: the input file and the name for the output file.
+
+```
+python3 <path>/<to>/<your_local>/<canadata_repository>/scripts/extract_rRNAs_mtRNAs.py gencode.vM33.transcripts.fa gencode_rRNAs.fa
+```
+
+Once you have it, you need to index this file using bowtie. This command takes in input the .fa file generated the previous step and requires the user to specify the output name
+
+```
+bowtie-build  <gencode_rRNAs.fa> <ebwt_base>
+```
+
+Afterwards, the last thing is to move all the files (if they are not already) in a new directory. Within the "data" directory of this github repo, create a directory named "bowtie_indexes" (Nb. keep the name unchanged) and move all the files there.
+
+```
+mkdir ./bowtie_indexes
+mv <location_of_ebtw_indexes>/*.ebwt <path>/<to>/<canadata>/data/bowtie_indexes
+```
+
+**OPTIONAL**
+
+If you do not have bowtie on your machine, you can use the file bowtie.yml to create a temporary conda environment where to have it. Beware you will have to install the tools and libraries needed there, if you want to execute all the commands detailed above in that environment.
+
+```
+conda env create -f <path_to_canadata>\conda\bowtie.yml
+```
+
+_Congrats, you build the bowtie index!_
+
+### How to create the bowtie index 
 ```
 sudo singularity build singularity/pipeline Singularity
 ```
@@ -54,6 +109,9 @@ Then as the profile `singularity` specifies `container = 'singularity/pipeline'`
 ```
 nextflow run main.nf -profile singularity
 ```
+
+
+
 
 ##### Conda 
 Create a conda definition yaml file [eg. here](conda/example.yml)
