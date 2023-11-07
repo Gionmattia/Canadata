@@ -48,13 +48,15 @@ All the steps carried are also clearly documented, so that users can re-execute 
 - nextflow.config file.
 - experimental design file.
 
+<br>
 
 ## Indexes and annotation files needed
 
 Several processes in this pipeline will require to use indexes or annotation files (bowtie.nf, salmon.nf, tximport.nf). This section explains how to create each file and where to store them.
 The following tutorial will use the annotations and indexes used in this study as an example.
 
-### Bowtie.nf
+
+### 1) Bowtie.nf
 
 This module requires an index of the RNAs that the user wants to remove. Such index needs to be built from scratch.
 You will need to use the following libraries and tools: wget, gunzip, python3 (libraries: argparse, Bio, SeqIo), bowtie.
@@ -102,7 +104,7 @@ conda env create -f <path_to_canadata>\conda\bowtie.yml
 _Congrats, you build the bowtie index!_
 
 
-### Salmon.nf
+### 2) Salmon.nf
 
 Salmon will require you to build an index for it to work. This code is basically the tutorial given by the salmon documentation, but broken down.
 
@@ -136,6 +138,23 @@ sudo singularity run --bind <path_to_canadata>/data/salmon_index <path_to_canada
 _Congrats, you build the salmon index!_
 
 **NB2. The salmon index is built with a defo size of -k 31. This is also applied here. You might want to change that value depending on the length of your reads though.**
+
+
+### 3) Tximport.nf
+
+This module needs an annotation file for its .R script to work, which should be downloaded into the _data/mouse_gencode_releases_ subdirectory.
+
+```
+wget https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M33/gencode.vM33.chr_patch_hapl_scaff.annotation.gtf.gz
+```
+
+_Congrats, you have made it!_
+
+
+
+
+
+<br>
 
 ### How to create the bowtie index 
 ```
