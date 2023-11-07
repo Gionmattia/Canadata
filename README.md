@@ -137,7 +137,7 @@ sudo singularity run --bind <path_to_canadata>/data/salmon_index <path_to_canada
 
 _Congrats, you build the salmon index!_
 
-**NB2. The salmon index is built with a defo size of -k 31. This is also applied here. You might want to change that value depending on the length of your reads though.**
+**NB2. The salmon index is built with a defo size of -k 31. This is also applied here. You might want to change that value depending on the length of your reads though. This pipeline generates FASTQC reports which you can use to that end.**
 
 
 ### 3) Tximport.nf
