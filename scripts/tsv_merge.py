@@ -73,4 +73,10 @@ if __name__ == "__main__":
     files = input_files_list(args.input_dir, args.keyword)
     full_file_paths = [os.path.join(args.input_dir, file_name) for file_name in files]
     merged_tsv = tsv_merger(full_file_paths)
+<<<<<<< HEAD
     tsv_saver(merged_tsv, args.output_name)
+=======
+    tsv_saver(merged_tsv, args.output_name)
+
+# NEED TO TEST THE BEHAVIOUR OF THIS NEW FUNCTION
+>>>>>>> 09be5600533ad2351065d1fd6349f6177e994c18
