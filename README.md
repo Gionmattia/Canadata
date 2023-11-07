@@ -101,6 +101,42 @@ conda env create -f <path_to_canadata>\conda\bowtie.yml
 
 _Congrats, you build the bowtie index!_
 
+
+### Salmon.nf
+
+Salmon will require you to build an index for it to work. This code is basically the tutorial given by the salmon documentation, but broken down.
+
+First, create a folder inside data to download the file into, then download the files needed: the genome.fa and the trasncripts.fa
+
+**NB. If you executed the step above, you probably will aready have a .fa file for the transcripts. You can use that instead**
+
+```
+mkdir <path_to_canadata>/data/mouse_gencode_releases
+wget https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M33/GRCm39.primary_assembly.genome.fa.gz
+wget https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M33/gencode.vM33.transcripts.fa.gz
+```
+
+Then concatenate the two files into a "gentrome" file.
+
+```
+cat gencode.vM33.transcripts.fa.gz GRCm39.primary_assembly.genome.fa.gz > /data2/Canadata/Canadata/data/salmon_index/gentrome.fa.gz
+```
+Make a folder to store your salmon index:
+
+```
+mkdir <path_to_canadata>/data/salmon_index
+```
+
+Afterwards, you need to run salmon to build the index. You can do so by running salmon directly from the singularity container, following this code:
+
+```
+sudo singularity run --bind <path_to_canadata>/data/salmon_index <path_to_canadata>/singularity/salmon:1.10.1--h7e5ed60_0 salmon index -t <path_to_canadata>/data/salmon_index/gentrome.fa.gz -d <path_to_canadata>/data/salmon_index/decoys.txt -p 12 -i salmon_index --gencode
+```
+
+_Congrats, you build the salmon index!_
+
+**NB2. The salmon index is built with a defo size of -k 31. This is also applied here. You might want to change that value depending on the length of your reads though.**
+
 ### How to create the bowtie index 
 ```
 sudo singularity build singularity/pipeline Singularity
