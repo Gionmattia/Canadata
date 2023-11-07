@@ -8,24 +8,11 @@ It has been firstly used in the scope of "Project Canada".
 
 [NB. Add the "DTA" part in the future...?]
 
-
-## Requirements 
-This pipeline is run using the following container methods
-| Method      | Instructions                                                                                   |
-| ----------- | ---------------------------------------------------------------------------------------------- |
-| Singularity | [docs.syslabs.io](https://docs.sylabs.io/guides/3.0/user-guide/installation.html)              |
-| Conda       | [docs.conda.io](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html)  |
-
 ## Pipeline Structure
 
 The main.nf pipeline comprises two different sub-workflows, named "preprocessing.nf" and "quantification.nf".
 - Preprocessing.nf collects the raw files, performs quality checks and removes adapters and contaminants (more details in each process section).
 - Quantification.nf takes PE files and proceeds to ontain transcript counts. These are then converted to gene counts.
-
-## Required files for the analysis
-This pipeline requires several files (annotations, indexes or similar) in order to be executed.
-Given that many research lab could already have such files, the commands to obtain or create them have not been added to the main pipeline.
-In case users do not have such files (or do not know what those are), all the commands used to retrieve/create them have been compiled into a set of instructions inside this documentation.
 
 ## Downstream DTA analysis
 In the specific scope of "Project Canadata", the gene count files have also been merged and then used as input for  Differential Translation Analysis.
@@ -36,9 +23,21 @@ All the steps carried are also clearly documented, so that users can re-execute 
 
 <br>
 
+---
+# Setup 
 
-## Setup
-##### Input files needed
+
+## Requirements 
+This pipeline is run using the following container methods
+| Method      | Instructions                                                                                   |
+| ----------- | ---------------------------------------------------------------------------------------------- |
+| Singularity | [docs.syslabs.io](https://docs.sylabs.io/guides/3.0/user-guide/installation.html)              |
+| Conda       | [docs.conda.io](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html)  |
+
+## Input files needed
+This pipeline requires several files (annotations, indexes or similar) in order to be executed.
+Given that many research lab could already have such files, the commands to obtain or create them have not been added to the main pipeline.
+In case users do not have such files (or do not know what those are), all the commands used to retrieve/create them have been compiled into a set of instructions inside this documentation.
 
 - Indexes and annotation files.
 - parameters.yml file.
@@ -198,30 +197,31 @@ This file is needed for the DTA analysis. It is a .txt file with some specific r
 
 <br>
 
+---
 
-### How to create the bowtie index 
-```
-sudo singularity build singularity/pipeline Singularity
-```
-Then as the profile `singularity` specifies `container = 'singularity/pipeline'` use the following to execute:
-```
-nextflow run main.nf -profile singularity
-```
+# Pipeline Usage
+Call the pipeline directly from the cloned repository. Remember to specify the usage of the params_files.yml
 
-
-
-
-##### Conda 
-Create a conda definition yaml file [eg. here](conda/example.yml)
 ```
-nextflow run main.nf -profile conda
+nextflow run main.nf -params-file example_parameters.yml
 ```
 
-## Usage
-Call the pipeline directly
-```
-nextflow run main.nf
-```
+The pipeline will run across all the steps. Final output will be quantification files (gene_counts.csv files).
+In order to execute the DTA analysis, it will be necessary to run these files through some extra scripts.
+Given the study-specific nature of these analyses, such passages have not been added to the pipeline, but all the steps and scripts are still included in this github repo for reproducibility (see section below).
+
+<br>
+---
+
+# DTA analysis
+
+This section details all the scripts used for the DTA analysis, as well as some custom scripts used to generate graphical or tabular outputs for consulation.
+
+[add later]
+
+
+
+
 
 Run with all the frills
 ```
