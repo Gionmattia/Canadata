@@ -187,6 +187,17 @@ For instance, let's assume you are processing 10 files. 6 could be in the first 
 
 Be aware of your system capabilities before running this pipeline.
 
+<br> 
+
+
+## Experimental Design file
+
+This file is needed for the DTA analysis. It is a .txt file with some specific restrictions in its format, that will allow the packages used in the DTA to correctly interpret your data.
+
+[ more to come later on ]
+
+<br>
+
 
 ### How to create the bowtie index 
 ```
