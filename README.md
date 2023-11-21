@@ -226,12 +226,73 @@ In order to execute the DTA analysis, it will be necessary to run these files th
 Given the study-specific nature of these analyses, such passages have not been added to the pipeline, but all the steps and scripts are still included in this github repo for reproducibility (see section below).
 
 <br>
+
 ---
 
 # DTA analysis
 
 This section details all the scripts used for the DTA analysis, as well as some custom scripts used to generate graphical or tabular outputs for consulation.
 
+## Merging the gene count files
+
+First thing first, you will need to combine the samples together by SeqType: you want a file with all your gene counts from RNA-seq data and another for the ones from Rivo-seq/polysome profiling.
+
+This can be done with the script "tsv_merge.py" in the _scripts_ folder of this repository. To run the script you will need python3 and the following libraries:
+- pandas
+- argparse
+- os
+
+You can then execute the script from the terminal as it follows:
+
+```
+python3 ./scripts/tsv_merge.py <input_directory> <keyword> <output>
+```
+- _input_directory_ is basically the directory where you have all your gene counts after the TXIMPORT module has converted them. It should be the "./data/output/gene_counts" if you execute the pipeline as it is.
+- _keyword_ is the substring within the name of each gene count file that determines whether it is from RNAseq or RIBO-seq/Poylsome profiling (in this study, it was "input" and "poly", respectively)
+- _output_ is just the name of the output file. You can also specify a directory for it.
+
+At the end of this step, you should have two files in .tsv format. One containing all the gene counts (rows) for each sample (columns) for RNA-seq samples, the other for Ribo-Seq/Polysome profiling.
+
+## Running the DTA Analysis
+
+We are finally at the end, the DTA analysis. You will need to set up a conda environment to hold all the packages you need. There's a .yml file for it in the _conda_ subdirectory (_delthena.yml_).
+You can set everything by using this command in the terminal:
+
+```
+conda env create -f ./conda/delthena.yml 
+```
+
+Now just activate the environment and execute the scripts for the analysis. 
+
+```
+conda activate delthena
+```
+
+Again, these scripts are specific to this study. If you want to use them for your own analysis, you will need to adapt them to your study (specifically, your contrasts and your choice of baseline for each).
+
+```
+Rscript ./scripts/DeltaTE_ORFik_Analysis(by_cell).R <path_to_RNA-seq_count_file> <path_to_RIBO/Polysome_count_file> <path_to_sample_info.txt> <Batch_correction_T_or_F>
+Rscript ./scripts/DeltaTE_ORFik_Analsysis(by_condition).R <path_to_RNA-seq_count_file> <path_to_RIBO/Polysome_count_file> <path_to_sample_info.txt> <Batch_correction_T_or_F>
+```
+
+These scripts need 4 arguments, which are in order:
+- The path to the RNA-seq gene count file
+- The path to the Ribo-seq/Polysome profiling gene count file
+- The path to your *experimental design file* (see section above), here called _sample_info.txt_
+- A boolean (T/F) which will inform the script whether a batch analysis is necessary or not. You can see if a batch effect is present in your data by performing a PCA analysis (more info below).
+
+_Congrats, you completed the DTA analysis and the pipeline so far!_
+
+<br>
+
+---
+
+# DLC Content
+
+These are things not really required for a DTA analysis pipeline, but still added for future reference 
+
+Scripts to perform a PCA analsys
+Scripts to plot the data and convert it to gene names/symbols
 [add later]
 
 
