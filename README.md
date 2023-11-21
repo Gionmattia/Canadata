@@ -191,9 +191,24 @@ Be aware of your system capabilities before running this pipeline.
 
 ## Experimental Design file
 
-This file is needed for the DTA analysis. It is a .txt file with some specific restrictions in its format, that will allow the packages used in the DTA to correctly interpret your data.
+This file is needed for the DTA analysis. It is a tab-separated .txt file that will allow the packages used in the DTA to correctly interpret your data.
+**NB.** The "sampleID"s you need to insert at this point are the names of each sample you have in your analysis, as named at the end of the main.nf pipeline.
 
-[ more to come later on ]
+The first line fo the file must follow this structure (remember, the space between the name is a <tab>!):
+
+```
+SampleID	Condition	SeqType	Batch	Cell
+```
+Then, you just compile each row as if you were writing a tab-separated table. See below
+
+```
+SampleID	Condition	SeqType	Batch	Cell
+Rep1_BPanoi_input_CACCTTAC-TAGTGCCA	anoi	RNA	1	BP
+Rep1_BPanoi_poly_TTCTCGAC-ACCAAGCA	anoi	RIBO	1	BP
+[...]
+```
+Remember this example is specific to the context of the Canadata Project, were "SeqType", "Cell", and "Condition" were contrasts in the analysis. 
+If you need more information on this file for your own experiments, look at the DeltaTE documentation at (https://github.com/SGDDNB/translational_regulation)
 
 <br>
 
