@@ -3,9 +3,8 @@ message: "If you use this software, please cite it as below."
 authors:
   - family-names: Carancini
     given-names: Gionmattia
-    orcid: "https://orcid.org/0000-0001-7936-4883"
+    orcid: 0000-0001-7936-4883
 title: "Canadata Project"
 version: 1.0.0
-doi: NA
 date-released: 2024-01-08
 url: "https://github.com/Gionmattia/Canadata"
