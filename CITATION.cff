@@ -6,8 +6,6 @@ authors:
     orcid: https://orcid.org/0000-0001-7936-4883
 title: "Canadata Project"
 version: 1.0.0
-identifiers:
-  - type: 
-    value: 
+doi: NA
 date-released: 2024-01-08
 url: "https://github.com/Gionmattia/Canadata"
