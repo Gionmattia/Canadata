@@ -4,7 +4,7 @@
 ## Introduction 
 
 The following pipeline allows the user to process polisome-profiling and RNA-seq data in order to obtain gene-count files.
-It has been firstly used in the scope of "Project Canada".
+It has been fristly developed (and used) for the analysis of translatome within the work by Jovanovic et al (add reference once submitted), hereby provisionally referred to as "Project Canadata".
 
 [NB. Add the "DTA" part in the future...?]
 
@@ -12,11 +12,11 @@ It has been firstly used in the scope of "Project Canada".
 
 The main.nf pipeline comprises two different sub-workflows, named "preprocessing.nf" and "quantification.nf".
 - Preprocessing.nf collects the raw files, performs quality checks and removes adapters and contaminants (more details in each process section).
-- Quantification.nf takes PE files and proceeds to ontain transcript counts. These are then converted to gene counts.
+- Quantification.nf takes paired-end (PE) files and proceeds to align and retrieve individual transcript counts. These are then converted to gene counts.
 
 ## Downstream DTA analysis
-In the specific scope of "Project Canadata", the gene count files have also been merged and then used as input for  Differential Translation Analysis.
-Considering the study-specific nature of the analysis (and the need for user input) these steps have not been added to the main pipeline.
+In the specific scope of "Project Canadata", the gene count files from each sample have also been concatenated into a single dataframe (where columns are samples, while rows are gene counts) and then used as input for  Differential Translation Analysis.
+Considering the study-specific nature of the analysis (and the need for user input, when selecting the analysis contrast) these steps have not been added to the main pipeline.
 Instead, the instruction to re-create the virtual environment (as well as all the executable scripts used) have been added to this directory to ensure reproducibility.
 
 All the steps carried are also clearly documented, so that users can re-execute the analysis on their own machine.
@@ -279,32 +279,10 @@ These scripts need 4 arguments, which are in order:
 - The path to the RNA-seq gene count file
 - The path to the Ribo-seq/Polysome profiling gene count file
 - The path to your *experimental design file* (see section above), here called _sample_info.txt_
-- A boolean (T/F) which will inform the script whether a batch analysis is necessary or not. You can see if a batch effect is present in your data by performing a PCA analysis (more info below).
+- A boolean (T/F) which will inform the script whether a batch analysis is necessary or not.
 
 _Congrats, you completed the DTA analysis and the pipeline so far!_
 
 <br>
 
 ---
-
-# DLC Content
-
-These are things not really required for a DTA analysis pipeline, but still added for future reference 
-
-Scripts to perform a PCA analsys
-Scripts to plot the data and convert it to gene names/symbols
-[add later]
-
-
-
-
-
-Run with all the frills
-```
-bash scripts/run-w-frills <params-file> <profile name from nextflow.config>
-```
-Example
-```
-bash scripts/run-w-frills example_parameters.yml standard
-```
-
