@@ -283,6 +283,9 @@ These scripts need 4 arguments, which are in order:
 
 _Congrats, you completed the DTA analysis and the pipeline so far!_
 
+The results are formatted as a table, showing the fold change for RNA-counts, polisome-Seq counts, and TE between the two conditions. Each also comes with an adjusted-p-value.
+The ORFik package (used within the scripts) will also identify the Regulatory Mode for each gene and add it to the results.
+
 <br>
 
 ---
